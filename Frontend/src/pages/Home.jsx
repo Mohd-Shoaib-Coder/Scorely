@@ -1,39 +1,46 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Home = () => {
-  const navigate = useNavigate();
-  const [users, setUsers] = useState(["Rahul", "Kamal", "Sanak"]);
+  
+ 
   const [selectedUser, setSelectedUser] = useState("");
-  const [newUser, setNewUser] = useState("");
-  const [imageFile, setImageFile] = useState(null);
+
   const [claimedPoints, setClaimedPoints] = useState(null);
 
+
+const[userName,setUserName]=useState("");
+const[userImage,setUserImage]=useState(null);
+
   const handleAddUser = async () => {
-    if (!newUser.trim() || !imageFile) {
-      alert("Please enter name and select an image.");
-      return;
+
+    if(!userName || !userImage){
+
+      alert("Please fill in the fields")
     }
 
-    const formData = new FormData();
-    formData.append("name", newUser.trim());
-    formData.append("image", imageFile);
+    const formData=new FormData();
 
-    try {
-      const res = await fetch("http://localhost:5000/add-user", {
-        method: "POST",
-        body: formData,
-      });
+    formData.append("userName",userName);
+    formData.append("image",userImage);
 
-      const data = await res.json();
-      setUsers([...users, data.name]); // Optional: update with data.name
-      setNewUser("");
-      setImageFile(null);
-      alert("User added successfully!");
-    } catch (err) {
-      console.error("Error:", err);
-      alert("Failed to add user.");
+    try{
+
+      const response=await fetch("http://localhost:4000/createUser",{
+
+  method:"POST",
+  body:formData
+ })
+
+ const data=await response.json()
+console.log("Backend se bheja user data",data)
     }
+    catch(err){
+
+     console.log("Error",err)
+    }
+
+
   };
 
   const handleClaimPoints = () => {
@@ -45,7 +52,7 @@ const Home = () => {
     const points = Math.floor(Math.random() * 10) + 1;
     setClaimedPoints({ user: selectedUser, points });
 
-    // API call to backend to store claim can be done here
+ 
   };
 
   return (
@@ -65,11 +72,7 @@ const Home = () => {
           onChange={(e) => setSelectedUser(e.target.value)}
         >
           <option value="">-- Choose user --</option>
-          {users.map((user, idx) => (
-            <option key={idx} value={user}>
-              {user}
-            </option>
-          ))}
+         
         </select>
 
         {/* Claim Button */}
@@ -90,6 +93,7 @@ const Home = () => {
 
         {/* Add User Form */}
         <div className="mt-6">
+          
           <label className="block text-gray-700 font-medium mb-1">
             Add New User:
           </label>
@@ -97,8 +101,8 @@ const Home = () => {
             type="text"
             className="w-full border border-yellow-300 rounded-md px-4 py-2 mb-3 outline-none focus:ring-2 focus:ring-yellow-400"
             placeholder="Enter new user name"
-            value={newUser}
-            onChange={(e) => setNewUser(e.target.value)}
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
           />
 
           <label className="block text-gray-700 font-medium mb-1">
@@ -108,7 +112,7 @@ const Home = () => {
             type="file"
             accept="image/*"
             className="mb-4"
-            onChange={(e) => setImageFile(e.target.files[0])}
+            onChange={(e) => setUserImage(e.target.files[0])}
           />
 
           <button
@@ -121,18 +125,18 @@ const Home = () => {
 
         {/* Navigation Buttons */}
         <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-          <button
-            onClick={() => navigate("/leaderboard")}
+          <NavLink to="/Leaderboard"
+            
             className="bg-yellow-400 hover:bg-yellow-500 text-white py-2 px-4 rounded-md w-full sm:w-auto"
           >
             View Leaderboard
-          </button>
-          <button
-            onClick={() => navigate("/history")}
+          </NavLink>
+          <NavLink to="/History"
+           
             className="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded-md w-full sm:w-auto"
           >
             View Claim History
-          </button>
+          </NavLink>
         </div>
       </div>
     </div>

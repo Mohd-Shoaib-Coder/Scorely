@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router";
 
 const History = () => {
   const historyData = [
@@ -49,18 +50,18 @@ const History = () => {
 <div className="flex flex-col sm:flex-row justify-center items-center bg-white p-4 rounded-xl shadow-md mb-6 gap-4">
         
         <div className="flex gap-4 mt-2 sm:mt-0">
-          <button
-            onClick={() => navigate('/')}
+          <NavLink to="/"
+        
             className="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-md text-base font-medium"
           >
             Home
-          </button>
-          <button
-            onClick={() => navigate('/history')}
+          </NavLink>
+          <NavLink to="/Leaderboard"
+            
             className="bg-gray-600 hover:bg-gray-700 text-white px-5 py-2 rounded-md text-base font-medium"
           >
             Leaderboard
-          </button>
+          </NavLink>
         </div>
       </div>
 
