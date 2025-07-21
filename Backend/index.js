@@ -2,6 +2,7 @@ const express=require("express");
 const cors=require("cors");
 const multer=require("multer");
 const User=require("./Models/user")
+const ClaimHistory = require("./Models/claimHistory");
 const mongoose=require("mongoose")
 const upload = require("./Middlewares/multer");
 require('dotenv').config()
@@ -50,8 +51,7 @@ try{
 }
 
 
-    
-//   return res.json({ message: "User received", userName, image });
+ 
 })
 
 
@@ -89,6 +89,31 @@ app.post("/updatePoints", async (req, res) => {
   } catch (error) {
     console.error("Error updating points:", error);
     res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
+
+
+app.post("/claim", async (req, res) => {
+  const { userName, points } = req.body;
+
+  try {
+    const entry = await ClaimHistory.create({ userName, points });
+    res.status(201).json(entry);
+  } catch (err) {
+    res.status(500).json({ error: "Error saving claim history" });
+  }
+});
+
+
+
+app.get("/history", async (req, res) => {
+  try {
+    const history = await ClaimHistory.find().sort({ claimedAt: -1 });
+    res.json(history);
+  } catch (err) {
+    res.status(500).json({ error: "Could not fetch history" });
   }
 });
 

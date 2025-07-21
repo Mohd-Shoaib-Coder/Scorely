@@ -1,4 +1,4 @@
-export const  handleClaimPoints = async ( selectedUser,setClaimedPoints,setAllUsers) => {
+export const handleClaimPoints = async (selectedUser, setClaimedPoints, setAllUsers) => {
   if (!selectedUser) {
     alert("Please select a user.");
     return;
@@ -7,32 +7,31 @@ export const  handleClaimPoints = async ( selectedUser,setClaimedPoints,setAllUs
   const points = Math.floor(Math.random() * 10) + 1;
 
   try {
-    const response = await fetch("http://localhost:4000/updatePoints", {
+    // Update user points
+    const res = await fetch("http://localhost:4000/updatePoints", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userName: selectedUser,
-        points,
-      }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userName: selectedUser, points }),
     });
 
-    const data = await response.json();
+    const data = await res.json();
 
-    if (data.user) {
+    if (data.message === "Points updated") {
+      // Save claim log
+      await fetch("http://localhost:4000/claim", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userName: selectedUser, points }),
+      });
+
       setClaimedPoints({ user: selectedUser, points });
 
-      // Update the local user list with new points
-      setAllUsers((prevUsers) =>
-        prevUsers.map((user) =>
-          user.userName === selectedUser
-            ? { ...user, userPoints: user.userPoints + points }
-            : user
-        )
-      );
+      // Refresh list
+      const updatedUsers = await fetch("http://localhost:4000/sendUser");
+      const list = await updatedUsers.json();
+      setAllUsers(list);
     }
-  } catch (error) {
-    console.error("Error updating points:", error);
+  } catch (err) {
+    console.error("Error claiming points:", err);
   }
 };

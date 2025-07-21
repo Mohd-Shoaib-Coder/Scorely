@@ -47,18 +47,19 @@ const others=users.slice(3)
         </h1>
         <p className="mt-2 text-yellow-800">Discover the top wealth holders</p>
 
-        <div className="flex justify-center mt-4 gap-4">
+        <div className="flex justify-center gap-4 mt-6">
           <NavLink
             to="/"
-            className="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-xl text-sm font-medium transition"
+            className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded-lg font-medium shadow transition"
           >
-            Home
+            ⬅️ Back to Home
           </NavLink>
           <NavLink
             to="/history"
-            className="bg-gray-600 hover:bg-gray-700 text-white px-5 py-2 rounded-xl text-sm font-medium transition"
+            className="bg-gray-700 hover:bg-gray-800 text-white px-6 py-2 rounded-lg font-medium shadow transition"
           >
-            History
+            📜 View History
+
           </NavLink>
         </div>
       </header>

@@ -1,82 +1,69 @@
-import React from "react";
-import { NavLink } from "react-router";
+import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 
 const History = () => {
- 
+  const [history, setHistory] = useState([]);
+
+  useEffect(() => {
+    const getHistory = async () => {
+      const res = await fetch("http://localhost:4000/history");
+      const data = await res.json();
+      setHistory(data);
+    };
+
+    getHistory();
+  }, []);
+
   return (
+    <div className="min-h-screen bg-gradient-to-tr from-yellow-100 via-white to-yellow-50 text-gray-900">
+      {/* Header */}
+      <header className="text-center py-6 bg-yellow-100 shadow-md mb-8">
+        <h1 className="text-4xl font-extrabold tracking-wider text-yellow-600">
+          📜 Claim History
+        </h1>
+        <p className="mt-2 text-yellow-800">Track who claimed what & when</p>
 
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div className="min-h-screen bg-gradient-to-b from-yellow-100 to-yellow-50 p-6">
-
-
-
-
-
-<div className="flex flex-col sm:flex-row justify-center items-center bg-white p-4 rounded-xl shadow-md mb-6 gap-4">
-        
-        <div className="flex gap-4 mt-2 sm:mt-0">
-          <NavLink to="/"
-        
-            className="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-md text-base font-medium"
+        {/* Navigation Buttons (Same style as bottom) */}
+        <div className="flex justify-center gap-4 mt-6">
+          <NavLink
+            to="/"
+            className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded-lg font-medium shadow transition"
           >
-            Home
+            ⬅️ Back to Home
           </NavLink>
-          <NavLink to="/Leaderboard"
-            
-            className="bg-gray-600 hover:bg-gray-700 text-white px-5 py-2 rounded-md text-base font-medium"
+          <NavLink
+            to="/leaderboard"
+            className="bg-gray-700 hover:bg-gray-800 text-white px-6 py-2 rounded-lg font-medium shadow transition"
           >
-            Leaderboard
+            🥇 View Leaderboard
           </NavLink>
         </div>
-      </div>
+      </header>
 
-
-
-
-
-      <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-6">
-        <h1 className="text-2xl font-bold text-center text-yellow-800 mb-6">
-          📜 Claim Points History
-        </h1>
-
-        {historyData.length === 0 ? (
-          <p className="text-center text-gray-500">No history available.</p>
+      {/* Claim History List */}
+      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-md p-6 space-y-4">
+        {history.length === 0 ? (
+          <p className="text-center text-gray-500">No claim history yet.</p>
         ) : (
-          <ul className="space-y-4">
-            {historyData.map((entry, index) => (
-              <li
-                key={index}
-                className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 shadow-sm hover:shadow-md transition"
-              >
-                <div className="flex justify-between items-center mb-1">
-                  <span className="text-lg font-semibold text-gray-700">
-                    {entry.user}
-                  </span>
-                  <span className="text-sm text-gray-500">
-                    {entry.date} at {entry.time}
-                  </span>
+          history.map((entry, index) => (
+            <div
+              key={index}
+              className="flex items-center justify-between p-4 border border-yellow-200 bg-yellow-50 rounded-xl transform transition duration-300 hover:scale-[1.01] hover:shadow-sm"
+            >
+              <div>
+                <div className="font-semibold text-gray-800 text-sm sm:text-base">
+                  {entry.userName}
                 </div>
-                <div className="text-yellow-600 font-bold text-sm">
-                  🎯 Claimed {entry.points} points
+                <div className="text-sm text-gray-500">
+                  {new Date(entry.claimedAt).toLocaleString()}
                 </div>
-              </li>
-            ))}
-          </ul>
+              </div>
+
+              <div className="text-yellow-600 font-bold text-sm sm:text-base">
+                +{entry.points}
+              </div>
+            </div>
+          ))
         )}
       </div>
     </div>
