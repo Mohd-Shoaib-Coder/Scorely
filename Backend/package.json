@@ -4,7 +4,7 @@
   "description": "Backend for Scorely – Claim Points Portal",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node index.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
