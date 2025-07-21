@@ -1,12 +1,6 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 
-
-
 const Leaderboard = () => {
-  const navigate = useNavigate();
-
   const topThree = [
     {
       name: 'Bindas.',
@@ -36,65 +30,86 @@ const Leaderboard = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-yellow-100 to-yellow-50 p-4">
-      {/* Navbar */}
-      <div className="flex flex-col sm:flex-row justify-center items-center bg-white p-4 rounded-xl shadow-md mb-6 gap-4">
-        
-        <div className="flex gap-4 mt-2 sm:mt-0">
-          <NavLink to="/"
-            
-            className="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-md text-base font-medium"
+    <div className="min-h-screen bg-gradient-to-tr from-yellow-100 via-white to-yellow-50 text-gray-900">
+      {/* Header like Home.jsx */}
+      <header className="text-center py-6 bg-yellow-100 shadow-md mb-8">
+        <h1 className="text-4xl font-extrabold tracking-wider text-yellow-600">
+          🥇 Wealth Leaderboard
+        </h1>
+        <p className="mt-2 text-yellow-800">Discover the top wealth holders</p>
+
+        <div className="flex justify-center mt-4 gap-4">
+          <NavLink
+            to="/"
+            className="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-xl text-sm font-medium transition"
           >
             Home
           </NavLink>
-          <NavLink to="/history"
-            
-            className="bg-gray-600 hover:bg-gray-700 text-white px-5 py-2 rounded-md text-base font-medium"
+          <NavLink
+            to="/history"
+            className="bg-gray-600 hover:bg-gray-700 text-white px-5 py-2 rounded-xl text-sm font-medium transition"
           >
             History
           </NavLink>
         </div>
+      </header>
+
+      {/* Top 3 */}
+      <div className="flex justify-center items-end gap-6 mb-10 flex-wrap">
+        {topThree
+          .sort((a, b) => a.rank - b.rank)
+          .map((user, i) => (
+            <div
+              key={i}
+              className={`relative flex flex-col items-center bg-white rounded-2xl p-4 shadow-lg w-28 sm:w-32 transform transition duration-300 cursor-pointer hover:scale-105 hover:shadow-2xl ${
+                user.rank === 1 ? 'scale-110 z-10 bg-yellow-50 border-2 border-yellow-300' : 'opacity-90'
+              }`}
+            >
+              <div className="absolute -top-4 -left-4 bg-yellow-500 text-white text-xs px-2 py-1 rounded-full font-bold shadow">
+                #{user.rank}
+              </div>
+              <div
+                className={`w-16 h-16 rounded-full overflow-hidden border-4 mb-2 ${
+                  user.rank === 1 ? 'border-yellow-500' : 'border-gray-300'
+                }`}
+              >
+                <img src={user.image} alt={user.name} className="w-full h-full object-cover" />
+              </div>
+              <div className="text-xs sm:text-sm text-gray-800 font-semibold text-center truncate w-full">
+                {user.name}
+              </div>
+              <div className="text-yellow-600 font-bold text-sm">{user.score}</div>
+              <div className="mt-2 text-xl">
+                {user.rank === 1 ? '👑' : user.rank === 2 ? '🥈' : '🥉'}
+              </div>
+            </div>
+          ))}
       </div>
 
-      <div className="text-center text-yellow-800 font-bold text-2xl mb-4">Wealth Ranking</div>
-      <div className="flex justify-center gap-4 mb-6">
-        <button className="bg-white px-5 py-2 rounded-full text-sm font-medium shadow-md">Daily</button>
-        <button className="bg-yellow-400 text-white px-5 py-2 rounded-full text-sm font-medium shadow-md">Monthly</button>
+      {/* Others List */}
+      {/* Others List */}
+<div className="bg-white rounded-2xl shadow-md p-4 space-y-3 max-w-2xl mx-auto">
+  {others.map((user, i) => (
+    <div
+      key={i}
+      className="flex items-center justify-between py-3 px-4 border border-yellow-200 bg-yellow-50 rounded-xl transform transition duration-300 hover:scale-[1.01] hover:shadow-sm cursor-pointer"
+    >
+      <div className="flex items-center gap-4">
+        <span className="text-yellow-600 font-bold text-sm w-5">#{i + 4}</span>
+        <img
+          src={user.image}
+          alt={user.name}
+          className="w-10 h-10 rounded-full border border-yellow-300"
+        />
+        <span className="text-sm font-medium text-gray-800 truncate max-w-[140px]">
+          {user.name}
+        </span>
       </div>
+      <div className="text-yellow-600 font-bold text-sm">{user.score}</div>
+    </div>
+  ))}
+</div>
 
-      <div className="flex justify-center items-end gap-4 mb-8">
-        {topThree.map((user, i) => (
-          <div
-            key={i}
-            className={`flex flex-col items-center bg-white rounded-xl p-4 shadow-lg w-24 ${
-              user.rank === 1 ? 'scale-110 z-10 bg-yellow-100' : 'opacity-80'
-            }`}
-          >
-            <div className={`w-12 h-12 rounded-full overflow-hidden mb-2 border-2 ${
-              user.rank === 1 ? 'border-yellow-500' : 'border-gray-300'
-            }`}>
-              <img src={user.image} alt={user.name} className="w-full h-full object-cover" />
-            </div>
-            <div className="text-xs text-gray-700 text-center font-semibold truncate w-full">{user.name}</div>
-            <div className="text-xs text-yellow-600 font-bold">{user.score}</div>
-            <div className="mt-2 text-sm font-bold text-yellow-500">
-              {user.rank === 1 ? '👑' : user.rank === 2 ? '🥈' : '🥉'}
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="bg-white rounded-xl shadow-md p-4">
-        {others.map((user, i) => (
-          <div key={i} className="flex items-center justify-between py-2 border-b last:border-b-0">
-            <div className="flex items-center gap-3">
-              <img src={user.image} alt={user.name} className="w-10 h-10 rounded-full border" />
-              <span className="text-sm font-medium text-gray-800 truncate max-w-[120px]">{user.name}</span>
-            </div>
-            <div className="text-yellow-600 font-bold text-sm">{user.score}</div>
-          </div>
-        ))}
-      </div>
     </div>
   );
 };
