@@ -9,11 +9,23 @@ require('dotenv').config()
 
 
 const app=express();
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://scorely-frontend.onrender.com"
+];
+
 app.use(cors({
-   origin:"http://localhost:5173",
-   methods:["GET","POST"],
-   credentials:true
-}))
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST"],
+  credentials: true
+}));
 
 app.use("/uploads", express.static("uploads"));
 app.use(express.json());
