@@ -15,7 +15,7 @@ useEffect(()=>{
 
       try{
 
-        const response=await fetch("http://localhost:4000/sendUser",{
+        const response=await fetch("https://scorely-backend.onrender.com/sendUser",{
 
           method:"GET",
         })
@@ -82,7 +82,7 @@ const others=users.slice(3)
               }`}
             >
               <img
-                src={`http://localhost:4000/${user.image}`}
+                src={`https://scorely-backend.onrender.com/${user.image}`}
                 alt={user.userName}
                 className="w-full h-full object-cover"
               />
@@ -108,7 +108,7 @@ const others=users.slice(3)
             <div className="flex items-center gap-4">
               <span className="text-yellow-600 font-bold text-sm w-6">#{i + 4}</span>
               <img
-                src={`http://localhost:4000/${user.image}`}
+                src={`https://scorely-backend.onrender.com/${user.image}`}
                 alt={user.userName}
                 className="w-10 h-10 rounded-full border border-yellow-300"
               />

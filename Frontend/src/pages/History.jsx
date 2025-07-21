@@ -6,7 +6,7 @@ const History = () => {
 
   useEffect(() => {
     const getHistory = async () => {
-      const res = await fetch("http://localhost:4000/history");
+      const res = await fetch("https://scorely-backend.onrender.com/history");
       const data = await res.json();
       setHistory(data);
     };

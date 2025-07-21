@@ -8,7 +8,7 @@ export const handleClaimPoints = async (selectedUser, setClaimedPoints, setAllUs
 
   try {
     // Update user points
-    const res = await fetch("http://localhost:4000/updatePoints", {
+    const res = await fetch("https://scorely-backend.onrender.com/updatePoints", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userName: selectedUser, points }),
@@ -18,7 +18,7 @@ export const handleClaimPoints = async (selectedUser, setClaimedPoints, setAllUs
 
     if (data.message === "Points updated") {
       // Save claim log
-      await fetch("http://localhost:4000/claim", {
+      await fetch("https://scorely-backend.onrender.com/claim", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userName: selectedUser, points }),
@@ -27,7 +27,7 @@ export const handleClaimPoints = async (selectedUser, setClaimedPoints, setAllUs
       setClaimedPoints({ user: selectedUser, points });
 
       // Refresh list
-      const updatedUsers = await fetch("http://localhost:4000/sendUser");
+      const updatedUsers = await fetch("https://scorely-backend.onrender.com/sendUser");
       const list = await updatedUsers.json();
       setAllUsers(list);
     }

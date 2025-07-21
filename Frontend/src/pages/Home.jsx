@@ -23,7 +23,7 @@ const Home = () => {
     formData.append("userPoints", userPoints);
 
     try {
-      const response = await fetch("http://localhost:4000/createUser", {
+      const response = await fetch("https://scorely-backend.onrender.com/createUser", {
         method: "POST",
         body: formData,
       });
@@ -37,7 +37,7 @@ const Home = () => {
 
   const dropdownUsers = async () => {
     try {
-      const response = await fetch("http://localhost:4000/sendUser", {
+      const response = await fetch("https://scorely-backend.onrender.com/sendUser", {
         method: "GET",
       });
 
@@ -104,7 +104,7 @@ const Home = () => {
                   .map((user) => (
                     <React.Fragment key={user._id}>
                       <img
-                        src={`http://localhost:4000/${user.image}`}
+                        src={`https://scorely-backend.onrender.com/${user.image}`}
                         alt={user.userName}
                         className="w-24 h-24 rounded-full border-4 border-yellow-500 shadow-lg"
                       />
