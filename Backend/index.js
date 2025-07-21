@@ -30,19 +30,19 @@ app.post("/createUser",upload.single("image"),async function(req,res){
   
    const {userName}=req.body;
    const imagePath=req.file?.path;
+   const {userPoints}=req.body;
    
-if(!userName || !imagePath){
+if(!userName || !imagePath || !userPoints){
    return res.status(400).json({error:"userName or Image missnig"})
 }
 
-// console.log("username",userName)
-// console.log("image",image)
 
 try{
 
    const user=await User.create({
       userName,
       image:imagePath,
+      userPoints,
    })
    res.json(user)
 }catch(e){
@@ -53,6 +53,44 @@ try{
     
 //   return res.json({ message: "User received", userName, image });
 })
+
+
+app.get("/sendUser",async function(req,res){
+
+try{
+
+   const sendUsers=await User.find();
+res.json(sendUsers)
+
+}catch(e){
+res.status(400).json(e)
+}
+
+
+
+})
+
+
+
+
+app.post("/updatePoints", async (req, res) => {
+  const { userName, points } = req.body;
+
+  try {
+    const user = await User.findOne({ userName });
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    user.userPoints += points;
+    await user.save();
+
+    res.json({ message: "Points updated", user });
+  } catch (error) {
+    console.error("Error updating points:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 
 
 

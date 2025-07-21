@@ -2,27 +2,7 @@ import React from "react";
 import { NavLink } from "react-router";
 
 const History = () => {
-  const historyData = [
-    {
-      user: "Rahul",
-      points: 7,
-      date: "2025-07-20",
-      time: "10:32 AM",
-    },
-    {
-      user: "Kamal",
-      points: 4,
-      date: "2025-07-19",
-      time: "03:21 PM",
-    },
-    {
-      user: "Sanak",
-      points: 10,
-      date: "2025-07-18",
-      time: "08:45 AM",
-    },
-  ];
-
+ 
   return (
 
 
