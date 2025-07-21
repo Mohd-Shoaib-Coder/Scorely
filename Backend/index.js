@@ -66,9 +66,10 @@ res.json(sendUsers)
 res.status(400).json(e)
 }
 
-
-
 })
+
+
+
 
 
 
@@ -98,5 +99,3 @@ app.listen(PORT,()=>{
 console.log(`App is Running on port ${PORT}`)
 })
 
-//no544Bphetdp8Xa8
-//mongodb+srv://000sheikhsiddiqui:no544Bphetdp8Xa8@cluster0.ifv3tzr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
