@@ -40,7 +40,7 @@ This can be used in classrooms, team competitions, or anywhere fun tracking of p
 
 ## 🚀 Live Demo
 
-🌐 [Live App Link]()
+🌐 https://scorely-frontend.onrender.com/
 
 
 
